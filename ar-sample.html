@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AR.js with A-Frame Sample</title>
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <script src="https://cdn.rawgit.com/jeromeetienne/AR.js/1.7.8/aframe/build/aframe-ar.js"></script>
+    <link rel="icon" href="data:image/x-icon;,">
+</head>
+<body style="margin: 0; overflow: hidden;">
+    <a-scene embedded arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: false;">
+        <a-marker preset="hiro">
+            <a-box id="myBox" class="raycastable" position="0 0.5 0" material="color: red;"></a-box>
+            <a-text id="helloText" value="Hello World" position="0 2 -2" visible="false"></a-text>
+        </a-marker>
+        <a-entity camera raycaster="objects: .raycastable"></a-entity>
+    </a-scene>
+    <script>
+        function showHelloWorld() {
+            const helloText = document.getElementById('helloText');
+            helloText.setAttribute('visible', true);
+        }
+
+        document.querySelector('a-scene').addEventListener('click', function(event) {
+            const scene = document.querySelector('a-scene');
+
+            const raycasterEl = scene.querySelector('[raycaster]');
+            raycasterEl.components.raycaster.refreshObjects();
+            const intersections = raycasterEl.components.raycaster.intersectedEls;
+
+            for (let i = 0; i < intersections.length; i++) {
+                if (intersections[i].id === 'myBox') {
+                    const clickedPosition = intersections[i].getAttribute('position');
+
+                    if (clickedPosition.y >= 0.9) {
+                        showHelloWorld();
+                    }
+                    break;
+                }
+            }
+        });
+    </script>
+</body>
+</html>
