@@ -2,8 +2,7 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AR.js with A-Frame Sample</title>
+    <title>AR.js with A-Frame Sample for PC</title>
     <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
     <script src="https://cdn.rawgit.com/jeromeetienne/AR.js/1.7.8/aframe/build/aframe-ar.js"></script>
     <link rel="icon" href="data:image/x-icon;,">
@@ -24,7 +23,6 @@
 
         document.querySelector('a-scene').addEventListener('click', function(event) {
             const scene = document.querySelector('a-scene');
-
             const raycasterEl = scene.querySelector('[raycaster]');
             raycasterEl.components.raycaster.refreshObjects();
             const intersections = raycasterEl.components.raycaster.intersectedEls;
@@ -32,7 +30,6 @@
             for (let i = 0; i < intersections.length; i++) {
                 if (intersections[i].id === 'myBox') {
                     const clickedPosition = intersections[i].getAttribute('position');
-
                     if (clickedPosition.y >= 0.9) {
                         showHelloWorld();
                     }
